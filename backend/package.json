@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "start:watch": "nodemon --exec 'npm run start' --ext js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "koa": "^2.15.4",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^13.0.1",
+    "qs": "^6.14.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^11.1.0",
+    "nodemon": "^3.1.9"
+  },
+  "type": "module"
+}
