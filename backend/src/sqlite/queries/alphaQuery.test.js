@@ -21,7 +21,6 @@ describe("insertAlpha function", () => {
 
     insertAlpha(db, username, params, status, fields)
       .then(message => {
-        // 验证记录是否成功插入
         db.get(
           "SELECT * FROM alpha WHERE username = ?",
           [username],

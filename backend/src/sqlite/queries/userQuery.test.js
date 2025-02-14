@@ -84,31 +84,26 @@ describe("getAllUsers function", () => {
     db = await initDB();
   });
 
-  afterEach(() => {
-    db.close();
+  afterEach(async () => {
+    await db.close();
   });
 
-  it("should return all users from the database", async done => {
+  it("should return all users from the database", async () => {
     // First, insert some users
-    await insertUser("testuser1", "password1", "token1");
-    await insertUser("testuser1", "password1", "token1");
-    getAllUsers(db).then(users => {
-      expect(users).to.be.an("array");
-      expect(users.length).to.equal(2); // We inserted 2 users
-      expect(users[0].username).to.equal("testuser1");
-      expect(users[1].username).to.equal("testuser2");
-      done();
-    });
+    await insertUser(db, "testuser1", "password1", "token1");
+    await insertUser(db, "testuser2", "password2", "token2");
+
+    const users = await getAllUsers(db);
+    expect(users).to.be.an("array");
+    expect(users.length).to.equal(2); // We inserted 2 users
+    expect(users[0].username).to.equal("testuser1");
+    expect(users[1].username).to.equal("testuser2");
   });
 
-  it("should return an empty array if no users exist", done => {
+  it("should return an empty array if no users exist", async () => {
     // Query when there are no users in the database
-    getAllUsers(db)
-      .then(users => {
-        expect(users).to.be.an("array");
-        expect(users.length).to.equal(0); // No users should be in the database
-        done();
-      })
-      .catch(done);
+    const users = await getAllUsers(db);
+    expect(users).to.be.an("array");
+    expect(users.length).to.equal(0); // No users should be in the database
   });
 });
