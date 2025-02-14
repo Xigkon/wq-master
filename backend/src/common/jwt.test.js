@@ -9,7 +9,7 @@ describe("JWT Token functions", () => {
   it("should generate a token", () => {
     token = generateToken(testUsername);
     expect(token).to.be.a("string");
-    expect(token).to.have.length.greaterThan(0); // 生成的 token 应该是一个非空字符串
+    expect(token).to.have.length.greaterThan(0);
   });
 
   it("should verify a valid token", () => {
