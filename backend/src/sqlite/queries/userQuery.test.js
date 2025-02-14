@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { initDB } from "../index.js";
-import { insertUser, updateUserToken } from "./userQuery.js";
+import { insertUser, updateUserToken, getAllUsers } from "./userQuery.js";
 
 // Test case for insertUser function
 describe("insertUser function", () => {
@@ -72,6 +72,42 @@ describe("insertUser function", () => {
             done();
           }
         );
+      })
+      .catch(done);
+  });
+});
+
+describe("getAllUsers function", () => {
+  let db;
+
+  beforeEach(async () => {
+    db = await initDB();
+  });
+
+  afterEach(() => {
+    db.close();
+  });
+
+  it("should return all users from the database", async done => {
+    // First, insert some users
+    await insertUser("testuser1", "password1", "token1");
+    await insertUser("testuser1", "password1", "token1");
+    getAllUsers(db).then(users => {
+      expect(users).to.be.an("array");
+      expect(users.length).to.equal(2); // We inserted 2 users
+      expect(users[0].username).to.equal("testuser1");
+      expect(users[1].username).to.equal("testuser2");
+      done();
+    });
+  });
+
+  it("should return an empty array if no users exist", done => {
+    // Query when there are no users in the database
+    getAllUsers(db)
+      .then(users => {
+        expect(users).to.be.an("array");
+        expect(users.length).to.equal(0); // No users should be in the database
+        done();
       })
       .catch(done);
   });

@@ -38,4 +38,18 @@ function updateUserToken(db, username, newToken) {
   });
 }
 
-export { insertUser, updateUserToken };
+function getAllUsers(db) {
+  const selectSQL = `SELECT * FROM users`;
+
+  return new Promise((resolve, reject) => {
+    db.all(selectSQL, [], (err, rows) => {
+      if (err) {
+        reject(new Error(`Query all users error: ${err.message}`));
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+}
+
+export { insertUser, updateUserToken, getAllUsers };
