@@ -7,6 +7,10 @@ import { DATABASE_PATH } from "./common/constants.js";
 const db = await initDB(DATABASE_PATH);
 const app = new Koa();
 
+app.use(async (ctx, next) => {
+  ctx.db = db; // 将 db 存入 ctx
+  await next();
+})
 app.use(koaBodyparser());
 app.use(userRoutes.routes());
 
