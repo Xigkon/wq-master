@@ -1,7 +1,10 @@
 import Koa from "koa";
 import userRoutes from "./routes/useRoutes.js";
 import koaBodyparser from 'koa-bodyparser';
+import { initDB } from "./sqlite/index.js";
+import { DATABASE_PATH } from "./common/constants.js";
 
+const db = await initDB(DATABASE_PATH);
 const app = new Koa();
 
 app.use(koaBodyparser());
